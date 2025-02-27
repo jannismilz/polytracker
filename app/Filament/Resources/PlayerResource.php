@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -18,14 +19,14 @@ class PlayerResource extends Resource
 {
     protected static ?string $model = Player::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('name'),
-                TextInput::make('user_hash_token'),
+                TextInput::make('name')->required(),
+                TextInput::make('user_hash_token')->required(),
             ]);
     }
 
@@ -34,12 +35,12 @@ class PlayerResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name'),
-                TextColumn::make('user_hash_token'),
-            ])
-            ->filters([
-                //
+                TextColumn::make('totalTimes')
+                    ->numeric(decimalPlaces: 3, decimalSeparator: ":")
+                    ->sortable(),
             ])
             ->actions([
+                ViewAction::make(),
                 EditAction::make(),
             ])
             ->bulkActions([
@@ -52,7 +53,7 @@ class PlayerResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\TrackRecordsRelationManager::class
         ];
     }
 
@@ -60,6 +61,7 @@ class PlayerResource extends Resource
     {
         return [
             'index' => Pages\ListPlayers::route('/'),
+            'view' => Pages\ViewPlayer::route('/{record}'),
         ];
     }
 }

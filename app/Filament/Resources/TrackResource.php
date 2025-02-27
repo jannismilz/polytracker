@@ -9,6 +9,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
@@ -24,8 +25,9 @@ class TrackResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')->columnSpanFull(),
-                Textarea::make('code')->rows(10)->columnSpanFull(),
+                TextInput::make('name')->required(),
+                TextInput::make('identifier')->required(),
+                Textarea::make('code')->rows(10)->columnSpanFull()->required(),
             ]);
     }
 
@@ -40,6 +42,7 @@ class TrackResource extends Resource
             ])
             ->actions([
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->bulkActions([
                 BulkActionGroup::make([

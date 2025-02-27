@@ -13,15 +13,17 @@ return new class extends Migration
     {
         Schema::create('players', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('user_hash_token');
+            $table->string('name')->unique();
+            $table->string('user_hash_token')->unique();
             $table->timestamps();
         });
 
         Schema::create('tracks', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->text('identifier')->unique();
+            $table->string('name')->unique();
             $table->text("code");
+            $table->timestamp("refreshed_at")->nullable();
             $table->timestamps();
         });
 
@@ -31,6 +33,8 @@ return new class extends Migration
             $table->unsignedBigInteger('player_id');
             $table->integer('time_ms');
             $table->timestamps();
+
+            $table->unique(['track_id', 'player_id']);
         });
     }
 
