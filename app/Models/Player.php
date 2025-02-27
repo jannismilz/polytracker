@@ -6,5 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Player extends Model
 {
-    //
+    protected $fillable = [
+        "name",
+        "user_hash_token"
+    ];
 }

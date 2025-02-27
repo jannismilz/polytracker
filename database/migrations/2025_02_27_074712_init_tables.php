@@ -29,7 +29,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('track_id');
             $table->unsignedBigInteger('player_id');
-            $table->integer('times_ms');
+            $table->integer('time_ms');
             $table->timestamps();
         });
     }
