@@ -25,7 +25,7 @@ class TrackResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')->columnSpanFull(),
-                Textarea::make('code')->columnSpanFull(),
+                Textarea::make('code')->rows(10)->columnSpanFull(),
             ]);
     }
 
