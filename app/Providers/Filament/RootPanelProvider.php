@@ -24,7 +24,7 @@ class RootPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('root')
-            ->path('')
+            ->path('app')
             ->login()
             ->colors([
                 'primary' => Color::Amber,
